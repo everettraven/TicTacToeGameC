@@ -3,6 +3,104 @@
 #include <stdlib.h>
 
 //This is a tic tac toe game made for the Poly Programming Club
+
+void PrintBoard(char **array);
+char EndCheck(char **array);
+void PlayX(char **board);
+void PlayO(char **board);
+char CheckFull(char **array);
+
+
+int main()
+{
+    char **board, winner = 'N';
+    int i,j;
+    
+    //Create primary head of the array
+    board = malloc(sizeof(char*) * 3);
+
+    //Create individual heads of the array
+    for(i = 0; i < 3; i++)
+    {
+        board[i] = malloc(sizeof(char) * 3);
+    }
+
+
+    //Fill the array
+    for(i = 0; i < 3; i++)
+    {
+        for(j = 0; j < 3; j++)
+        {
+            board[j][i] = ' ';
+        }
+    }
+
+    //Print the board to the screen
+    PrintBoard(board);
+
+
+   while(winner == 'N')
+   {
+
+     PlayX(board);
+
+     PrintBoard(board);
+
+     winner = EndCheck(board);
+     if(winner == 'N')
+     {
+         winner = CheckFull(board);
+     }else{}
+     
+     if(winner != 'N')
+     {
+         break;
+     }
+     else
+     {
+         PlayO(board);
+
+
+        PrintBoard(board);
+
+        winner = EndCheck(board);
+        if(winner == 'N')
+        {
+            winner = CheckFull(board);
+        }
+
+     }
+
+
+   } 
+
+    if(winner == 'X')
+    {
+        printf("\nX is the winner!\n");
+    }
+    else if(winner == 'O')
+    {
+        printf("\nO is the winner\n");
+    }
+    else
+    {
+        printf("The board is full, it's a scratch!");
+    }
+    
+    for(i = 0; i < 3; i++)
+    {
+        free(board[i]);
+    }
+
+    free(board);
+
+    printf("\nPress any key to close\n");
+
+    scanf("%c");
+
+    return 0;
+}
+
 void PrintBoard(char **array)
 {
     printf("    0   1   2\n");
@@ -173,90 +271,4 @@ char CheckFull(char **array)
 
 }
 
-
-int main()
-{
-    char **board, winner = 'N';
-    int i,j;
-    
-    //Create primary head of the array
-    board = malloc(sizeof(char*) * 3);
-
-    //Create individual heads of the array
-    for(i = 0; i < 3; i++)
-    {
-        board[i] = malloc(sizeof(char) * 3);
-    }
-
-
-    //Fill the array
-    for(i = 0; i < 3; i++)
-    {
-        for(j = 0; j < 3; j++)
-        {
-            board[j][i] = ' ';
-        }
-    }
-
-    //Print the board to the screen
-    PrintBoard(board);
-
-
-   while(winner == 'N')
-   {
-
-     PlayX(board);
-
-     PrintBoard(board);
-
-     winner = EndCheck(board);
-     if(winner == 'N')
-     {
-         winner = CheckFull(board);
-     }else{}
-     
-     if(winner != 'N')
-     {
-         break;
-     }
-     else
-     {
-         PlayO(board);
-
-
-        PrintBoard(board);
-
-        winner = EndCheck(board);
-        if(winner == 'N')
-        {
-            winner = CheckFull(board);
-        }
-
-     }
-
-
-   } 
-
-    if(winner == 'X')
-    {
-        printf("\nX is the winner!\n");
-    }
-    else if(winner == 'O')
-    {
-        printf("\nO is the winner\n");
-    }
-    else
-    {
-        printf("The board is full, it's a scratch!");
-    }
-    
-    for(i = 0; i < 3; i++)
-    {
-        free(board[i]);
-    }
-
-    free(board);
-
-    return 0;
-}
 
